@@ -6,6 +6,8 @@ defmodule Astro.SurfaceComponents.Button do
   """
   use Astro.SurfaceComponent
 
+  prefix("a-btn")
+
   @doc """
   Button background and foreground color
   """
@@ -17,14 +19,9 @@ defmodule Astro.SurfaceComponents.Button do
   prop size, :atom, required: false, values: Astro.sizes()
 
   @impl true
-  def mount(socket) do
-    {:ok, assign(socket, classes: ["a-button"])}
-  end
-
-  @impl true
   def render(assigns) do
-    ~L"""
-    <button class="{{ classes }}">{{ inner_block }}</button>
+    ~H"""
+    <button class="{{ @classes }}">{{ @children }}</button>
     """
   end
 end

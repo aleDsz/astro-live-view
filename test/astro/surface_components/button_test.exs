@@ -1,27 +1,22 @@
 defmodule Astro.SurfaceComponents.ButtonTest do
   use Astro.ComponentCase
 
-  defmodule View do
-    use Surface.LiveView
-    alias Astro.SurfaceComponents.Button
-
-    def render(assigns) do
-      ~H"""
-      <Button id="button">Sample</Button>
-      """
-    end
-  end
-
   describe "render/1" do
-    test "returns Button component without properties" do
-      {:ok, _view, rendered_html} = live_isolated(build_conn(), View)
+    test "returns Button component without button properties" do
+      html = """
+      <button class="a-btn">Sample</button>
+      """
 
-      expected_html =
-        """
-        <button data-phx-component=\"1\" class=\"a-btn\">Sample</button> 
-        """
+      assert render_component(module(), %{children: "Sample"}) =~ html
+    end
 
-      assert_html(rendered_html =~ expected_html)
+    test "returns Button component without color property" do
+      html = """
+      <button class="a-btn a-btn--venus">Sample</button>
+      """
+
+      assert render_component(module(), %{color: :venus, children: "Sample"}) =~
+               html
     end
   end
 end
