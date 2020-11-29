@@ -7,6 +7,8 @@ defmodule Astro.MixProject do
   def project do
     [
       app: :astro,
+      name: "Astro LiveView",
+      description: "Astro design system for Phoenix LiveView",
       version: @version,
       elixir: "~> 1.8",
       compilers: [:phoenix] ++ Mix.compilers(),
@@ -45,6 +47,22 @@ defmodule Astro.MixProject do
   defp package do
     [
       links: %{github: @repo}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "Astro",
+      extras: ["README.md"]
+    ]
+  end
+
+  defp package do
+    [
+      links: %{
+        github: @repo
+      },
+      licenses: ["MIT"]
     ]
   end
 

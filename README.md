@@ -1,6 +1,6 @@
-# Astro Live View 
+# Astro LiveView 
 
-### A design system by Magnetis for Phoenix Live View 👩‍🚀
+### A design system by Magnetis for Phoenix LiveView 👩‍🚀
 
 ![Elixir CI](https://github.com/aleDsz/astro-live-view/workflows/Elixir%20CI/badge.svg?branch=main)
 
