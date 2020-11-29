@@ -2,6 +2,10 @@
 
 ### A design system by Magnetis for Phoenix Live View 👩‍🚀
 
+![Elixir CI](https://github.com/aleDsz/astro-live-view/workflows/Elixir%20CI/badge.svg?branch=main)
+
+[![codecov](https://codecov.io/gh/aleDsz/astro-live-view/branch/main/graph/badge.svg?token=GHTTXGFZO0)](https://codecov.io/gh/aleDsz/astro-live-view)
+
 ## Table of contents
 
 - [Introduction](#introduction)
