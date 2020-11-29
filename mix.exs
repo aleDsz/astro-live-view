@@ -50,22 +50,6 @@ defmodule Astro.MixProject do
     ]
   end
 
-  defp docs do
-    [
-      main: "Astro",
-      extras: ["README.md"]
-    ]
-  end
-
-  defp package do
-    [
-      links: %{
-        github: @repo
-      },
-      licenses: ["MIT"]
-    ]
-  end
-
   defp deps do
     [
       {:phoenix_live_view, "~> 0.15.0", optional: true},
