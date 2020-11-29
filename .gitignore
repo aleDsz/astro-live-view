@@ -22,3 +22,5 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 astro-*.tar
 
+# Ignore ElixirLS folder
+/.elixir_ls/
