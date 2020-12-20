@@ -45,11 +45,6 @@ defmodule Astro.SurfaceComponent do
       """
       slot default
 
-      defp get_props do
-        props = __MODULE__.__props__()
-        Enum.filter(props, &(&1.name not in @excluded_props))
-      end
-
       defp build_css_class(prefix, class_name) do
         "#{prefix}--#{class_name}"
       end
@@ -58,6 +53,11 @@ defmodule Astro.SurfaceComponent do
 
   defmacro __before_compile__(_) do
     quote do
+      defp get_props do
+        props = __MODULE__.__props__()
+        Enum.filter(props, &(&1.name not in @excluded_props))
+      end
+
       defp maybe_change_value(prop, value) do
         if Keyword.has_key?(@overridable_value_for_props, prop) do
           override = Keyword.fetch!(@overridable_value_for_props, prop)
