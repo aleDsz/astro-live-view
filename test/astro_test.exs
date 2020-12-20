@@ -8,6 +8,7 @@ defmodule AstroTest do
       def is_color(value), do: Astro.is_color(value)
       def is_gradient(value), do: Astro.is_gradient(value)
       def is_size(value), do: Astro.is_size(value)
+      def is_icon(value), do: Astro.is_icon(value)
     end
 
     test "is_color/1 should validate color" do
@@ -23,6 +24,11 @@ defmodule AstroTest do
     test "is_size/1 should validate size" do
       assert GuardTest.is_size(:small)
       refute GuardTest.is_size(:foobar)
+    end
+
+    test "is_icon/1 should validate icon" do
+      assert GuardTest.is_icon(:transactions)
+      refute GuardTest.is_icon(:foobar)
     end
   end
 
@@ -45,6 +51,14 @@ defmodule AstroTest do
   describe "sizes/0" do
     test "returns a list of available sizes" do
       assert [:small, :medium, :large] = module().sizes()
+    end
+  end
+
+  describe "icons/0" do
+    test "returns a list of available icons" do
+      assert icons = module().icons()
+      assert length(icons) == 75
+      assert :x_men in icons
     end
   end
 
@@ -79,6 +93,20 @@ defmodule AstroTest do
 
     test "returns error when given size atom is invalid" do
       assert_raise Astro.Error, fn -> module().size(:foobar) end
+    end
+  end
+
+  describe "icon/1" do
+    test "returns a icon class from given icon atom" do
+      assert "heart" == module().icon(:heart)
+    end
+
+    test "returns a icon class from given underscored icon atom" do
+      assert "arrow-up" == module().icon(:arrow_up)
+    end
+
+    test "returns error when given icon atom is invalid" do
+      assert_raise Astro.Error, fn -> module().icon(:foobar) end
     end
   end
 

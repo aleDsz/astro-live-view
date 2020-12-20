@@ -30,6 +30,87 @@ defmodule Astro do
 
   @typep sizes :: :small | :medium | :large
 
+  @typep icons :: dashboard_icons() | support_icons()
+
+  @typep dashboard_icons ::
+           :additional
+           | :chart
+           | :invite
+           | :time
+           | :down
+           | :sheet
+           | :chat
+           | :flag
+           | :transactions
+           | :heart
+
+  @typep support_icons ::
+           :alert
+           | :circle_check
+           | :circle_down
+           | :circle_up
+           | :circle_left
+           | :circle_right
+           | :x_men
+           | :copy
+           | :info
+           | :key
+           | :logout
+           | :mail
+           | :menu
+           | :phone
+           | :profile
+           | :clock
+           | :arrow_down
+           | :arrow_up
+           | :arrow_left
+           | :arrow_right
+           | :download
+           | :play
+           | :locker
+           | :magnifier
+           | :sliders
+           | :eye_open
+           | :eye_closed
+           | :pencil
+           | :drop_down
+           | :drop_up
+           | :drop_left
+           | :drop_right
+           | :calendar
+           | :pizza
+           | :circle_mail
+           | :configuration
+           | :balloon
+           | :warning
+           | :photo
+           | :document
+           | :trash
+           | :cake
+           | :laptop
+           | :coin
+           | :cup
+           | :house
+           | :chart_up
+           | :comparison
+           | :circle_more
+           | :circle_less
+           | :light
+           | :floater
+           | :money_bag
+           | :dollars
+           | :bank
+           | :tax
+           | :calendar_check
+           | :upload
+           | :update
+           | :return
+           | :diagonal_left
+           | :diagonal_right
+           | :gift
+           | :close
+           | :mountain
+
   @colors ~w(
     earth
     venus
@@ -67,6 +148,89 @@ defmodule Astro do
   @sizes ~w(small medium large)a
   defguard is_size(size) when size in @sizes
 
+  @icons ~w(
+    additional
+    chart
+    invite
+    time
+    down
+    sheet
+    chat
+    flag
+    transactions
+    heart
+    alert
+    circle_check
+    circle_down
+    circle_up
+    circle_left
+    circle_right
+    x_men
+    copy
+    info
+    key
+    logout
+    mail
+    menu
+    phone
+    profile
+    clock
+    arrow_down
+    arrow_up
+    arrow_left
+    arrow_right
+    download
+    play
+    locker
+    magnifier
+    sliders
+    eye_open
+    eye_closed
+    pencil
+    drop_down
+    drop_up
+    drop_left
+    drop_right
+    calendar
+    pizza
+    circle_mail
+    configuration
+    balloon
+    warning
+    photo
+    document
+    trash
+    cake
+    laptop
+    coin
+    cup
+    house
+    chart_up
+    comparison
+    circle_more
+    circle_less
+    light
+    floater
+    money_bag
+    dollars
+    bank
+    tax
+    calendar_check
+    upload
+    update
+    return
+    diagonal_left
+    diagonal_right
+    gift
+    close
+    mountain
+  )a
+  defguard is_icon(icon) when icon in @icons
+
+  @doc "Gets available icons"
+  @spec icons() :: list(icons())
+  def icons, do: @icons
+
   @doc "Gets available sizes"
   @spec sizes() :: list(sizes())
   def sizes, do: @sizes
@@ -100,6 +264,16 @@ defmodule Astro do
   end
 
   def size(value), do: raise(Astro.Error, type: :size, value: value)
+
+  @doc """
+  Gets icon class name
+  """
+  @spec icon(icons()) :: binary()
+  def icon(icon_name) when is_icon(icon_name) do
+    normalize_class(icon_name)
+  end
+
+  def icon(value), do: raise(Astro.Error, type: :icon, value: value)
 
   @doc """
   Normalizes atom into binary class name
