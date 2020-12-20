@@ -2,7 +2,7 @@ defmodule Astro.SurfaceComponents.PrimaryButtonTest do
   use Astro.ComponentCase
 
   describe "render/1" do
-    test "returns PrimaryButton component without button properties" do
+    test "returns PrimaryButton component without properties" do
       assigns = %{}
 
       html =

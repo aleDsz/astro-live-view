@@ -2,7 +2,7 @@ defmodule Astro.SurfaceComponents.OutlineButtonTest do
   use Astro.ComponentCase
 
   describe "render/1" do
-    test "returns OutlineButton component without button properties" do
+    test "returns OutlineButton component without properties" do
       assigns = %{}
 
       html =
