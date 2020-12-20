@@ -82,28 +82,34 @@ defmodule Astro.SurfaceComponent do
         end
       end
 
+      defp validate_class_names(assigns) do
+        Enum.reduce(get_props(), [], fn %{name: prop, opts: opts} = x, acc ->
+          value = Map.get(assigns, prop)
+          required = Keyword.get(opts, :required, false)
+          validate_prop(prop, value, required, acc)
+        end)
+      end
+
+      defp validate_prop(prop, value, required, acc) do
+        cond do
+          (is_nil(required) or required == false) and is_nil(value) ->
+            acc
+
+          required and is_nil(value) ->
+            raise Astro.Error, type: prop, required: true
+
+          true ->
+            css_class = build_css_class(@prefix, maybe_change_value(prop, value))
+
+            if is_nil(css_class),
+              do: acc,
+              else: [css_class | acc]
+        end
+      end
+
       @impl true
       def generate_class_names(assigns) do
-        values =
-          Enum.reduce(get_props(), [], fn %{name: prop, opts: opts} = x, acc ->
-            value = Map.get(assigns, prop)
-            required = Keyword.get(opts, :required, false)
-
-            cond do
-              (is_nil(required) or required == false) and is_nil(value) ->
-                acc
-
-              required and is_nil(value) ->
-                raise Astro.Error, type: prop, required: true
-
-              true ->
-                css_class = build_css_class(@prefix, maybe_change_value(prop, value))
-
-                if is_nil(css_class),
-                  do: acc,
-                  else: [css_class | acc]
-            end
-          end)
+        values = validate_class_names(assigns)
 
         [@prefix | values]
         |> Enum.join(" ")
