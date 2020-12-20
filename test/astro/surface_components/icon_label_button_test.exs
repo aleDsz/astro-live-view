@@ -28,7 +28,7 @@ defmodule Astro.SurfaceComponents.IconLabelButtonTest do
 
       assert html =~ """
              <button class="a-btn a-btn--iconlabel">
-               <i class="a-icon a-icon--space-left a-icon--heart"></i>
+               <i class="a-icon a-icon--heart"></i>
                Sample
              </button>
              """
@@ -49,7 +49,7 @@ defmodule Astro.SurfaceComponents.IconLabelButtonTest do
 
       assert html =~ """
              <button class="a-btn a-btn--venus a-btn--iconlabel">
-               <i class="a-icon a-icon--space-left a-icon--heart"></i>
+               <i class="a-icon a-icon--heart"></i>
                Sample
              </button>
              """
@@ -70,7 +70,7 @@ defmodule Astro.SurfaceComponents.IconLabelButtonTest do
 
       assert html =~ """
              <button class="a-btn a-btn--large a-btn--iconlabel">
-               <i class="a-icon a-icon--space-left a-icon--heart"></i>
+               <i class="a-icon a-icon--heart"></i>
                Sample
              </button>
              """
@@ -92,7 +92,7 @@ defmodule Astro.SurfaceComponents.IconLabelButtonTest do
 
       assert html =~ """
              <button class="a-btn a-btn--large a-btn--earth a-btn--iconlabel">
-               <i class="a-icon a-icon--space-left a-icon--heart"></i>
+               <i class="a-icon a-icon--heart"></i>
                Sample
              </button>
              """
@@ -115,7 +115,7 @@ defmodule Astro.SurfaceComponents.IconLabelButtonTest do
 
       assert html =~ """
              <button disabled class="a-btn a-btn--large a-btn--earth a-btn--iconlabel">
-               <i class="a-icon a-icon--space-left a-icon--heart"></i>
+               <i class="a-icon a-icon--heart"></i>
                Sample
              </button>
              """
@@ -136,8 +136,30 @@ defmodule Astro.SurfaceComponents.IconLabelButtonTest do
 
       assert html =~ """
              <button class="a-btn a-btn--iconlabel">
-               <i class="a-icon a-icon--space-left a-icon--size-medium a-icon--heart"></i>
+               <i class="a-icon a-icon--size-medium a-icon--heart"></i>
                Sample
+             </button>
+             """
+    end
+
+    test "returns IconLabelButton component with right icon, icon size and icon name properties" do
+      assigns = %{
+        right_icon: true,
+        icon_size: :medium,
+        icon: :heart
+      }
+
+      html =
+        render_surface do
+          ~H"""
+          <IconLabelButton id="sample_button" right_icon={{ @right_icon }} icon={{ @icon }} icon_size={{ @icon_size }}>Sample</IconLabelButton>
+          """
+        end
+
+      assert html =~ """
+             <button class="a-btn a-btn--iconlabel-right a-btn--iconlabel">
+               Sample
+               <i class="a-icon a-icon--size-medium a-icon--heart"></i>
              </button>
              """
     end

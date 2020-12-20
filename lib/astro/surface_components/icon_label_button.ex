@@ -8,10 +8,11 @@ defmodule Astro.SurfaceComponents.IconLabelButton do
 
   alias Astro.SurfaceComponents.Icon
 
-  @excluded_props ~w(id disabled right_icon icon_size)a
+  @excluded_props ~w(id disabled icon_size)a
 
   @overridable_value_for_props [
-    icon: "iconlabel"
+    icon: "iconlabel",
+    right_icon: {"true", "iconlabel-right"}
   ]
 
   prefix("a-btn")
@@ -50,10 +51,13 @@ defmodule Astro.SurfaceComponents.IconLabelButton do
   def render(assigns) do
     ~H"""
     <button disabled={{ @disabled }} class="{{ generate_class_names(assigns) }}">
-      <Icon id={{ @id <> "_icon" }} :if={{ not @right_icon }} name={{ @icon }} size={{ @icon_size }} side={{ :left }} />
+      <Icon id={{ @id <> "_icon" }} :if={{ not @right_icon }} name={{ @icon }} size={{ @icon_size }} />
       <slot/>
-      <Icon id={{ @id <> "_icon" }} :if={{ @right_icon }} name={{ @icon }} size={{ @icon_size }} side={{ :right }} />
+      <Icon id={{ @id <> "_icon" }} :if={{ @right_icon }} name={{ @icon }} size={{ @icon_size }} />
     </button>
     """
   end
+
+  @impl true
+  def get_class_name(:right_icon, value), do: to_string(value)
 end

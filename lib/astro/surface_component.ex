@@ -45,6 +45,10 @@ defmodule Astro.SurfaceComponent do
       """
       slot default
 
+      defp build_css_class(prefix, class_name) when is_nil(class_name) or class_name == "" do
+        nil
+      end
+
       defp build_css_class(prefix, class_name) do
         "#{prefix}--#{class_name}"
       end
@@ -63,7 +67,16 @@ defmodule Astro.SurfaceComponent do
           override = Keyword.fetch!(@overridable_value_for_props, prop)
           value = get_class_name(__MODULE__, prop, value)
 
-          String.replace(override, "{#{prop}}", value)
+          case override do
+            {^value, override} ->
+              String.replace(override, "{#{prop}}", value)
+
+            {_, _} ->
+              nil
+
+            override ->
+              String.replace(override, "{#{prop}}", value)
+          end
         else
           get_class_name(__MODULE__, prop, value)
         end
@@ -84,10 +97,11 @@ defmodule Astro.SurfaceComponent do
                 raise Astro.Error, type: prop, required: true
 
               true ->
-                [
-                  build_css_class(@prefix, maybe_change_value(prop, value))
-                  | acc
-                ]
+                css_class = build_css_class(@prefix, maybe_change_value(prop, value))
+
+                if is_nil(css_class),
+                  do: acc,
+                  else: [css_class | acc]
             end
           end)
 
