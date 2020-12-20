@@ -58,7 +58,8 @@ defmodule Astro.MixProject do
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:floki, "~> 0.29.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
-      {:mix_test_watch, "~> 1.0", only: :test, runtime: false}
+      {:mix_test_watch, "~> 1.0", only: :test, runtime: false},
+      {:git_hooks, "~> 0.5.0", only: [:test, :dev], runtime: false}
     ]
   end
 end
