@@ -2,7 +2,10 @@ defmodule Astro.SurfaceComponent do
   @moduledoc """
   Astro interface to integrate with Surface library
   """
-  @callback generate_class_names(Phoenix.Socket.t()) :: binary()
+  @callback get_class_name(atom(), any()) :: binary()
+  @callback generate_class_names(Phoenix.LiveView.Socket.assigns()) :: binary()
+
+  @optional_callbacks get_class_name: 2
 
   @doc """
   Defines component class name prefix
@@ -30,7 +33,7 @@ defmodule Astro.SurfaceComponent do
       @before_compile Astro.SurfaceComponent
 
       @overridable_value_for_props []
-      @excluded_props ~w(id classNames isDisabled)a
+      @excluded_props ~w(id classNames disabled)a
 
       @doc """
       Component classNames
@@ -40,28 +43,12 @@ defmodule Astro.SurfaceComponent do
       @doc """
       Disable component
       """
-      prop isDisabled, :boolean
+      prop disabled, :boolean
 
       @doc """
       Inner body element
       """
       slot default
-
-      defp get_class_name(:color, value) do
-        Astro.color(value)
-      end
-
-      defp get_class_name(:gradient, value) do
-        Astro.gradient(value)
-      end
-
-      defp get_class_name(:size, value) do
-        Astro.size(value)
-      end
-
-      defp get_class_name(:isDisabled, value) when is_boolean(value) do
-        value
-      end
 
       defp get_props do
         props = __MODULE__.__props__()
@@ -71,8 +58,6 @@ defmodule Astro.SurfaceComponent do
       defp build_css_class(prefix, class_name) do
         "#{prefix}--#{class_name}"
       end
-
-      defoverridable get_class_name: 2
     end
   end
 
@@ -81,9 +66,9 @@ defmodule Astro.SurfaceComponent do
       defp maybe_change_value(prop, value) do
         if Keyword.has_key?(@overridable_value_for_props, prop) do
           override = Keyword.fetch!(@overridable_value_for_props, prop)
-          "#{override}-#{get_class_name(prop, value)}"
+          "#{override}-#{get_class_name(__MODULE__, prop, value)}"
         else
-          get_class_name(prop, value)
+          get_class_name(__MODULE__, prop, value)
         end
       end
 
@@ -105,5 +90,25 @@ defmodule Astro.SurfaceComponent do
         |> Enum.join(" ")
       end
     end
+  end
+
+  @doc """
+  Transform atom value into css class value
+  """
+  @spec get_class_name(module(), atom(), any()) :: binary()
+  def get_class_name(_, :color, value) do
+    Astro.color(value)
+  end
+
+  def get_class_name(_, :gradient, value) do
+    Astro.gradient(value)
+  end
+
+  def get_class_name(_, :size, value) do
+    Astro.size(value)
+  end
+
+  def get_class_name(module, prop, value) do
+    module.get_class_name(prop, value)
   end
 end
