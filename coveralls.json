@@ -3,6 +3,7 @@
 		"minimum_coverage": 80
 	},
 	"skip_files": [
+		"lib/astro/surface_component.ex",
 		"test/*"
 	]
 }
