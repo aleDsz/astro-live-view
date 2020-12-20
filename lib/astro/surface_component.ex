@@ -21,12 +21,15 @@ defmodule Astro.SurfaceComponent do
   defmacro __using__(opts) do
     Module.register_attribute(__CALLER__.module, :prefix, accumulate: true)
     Module.register_attribute(__CALLER__.module, :excluded_props, accumulate: false)
+    Module.register_attribute(__CALLER__.module, :overridable_value_for_props, accumulate: false)
 
     quote do
       import Astro.SurfaceComponent
       use Surface.LiveComponent, unquote(opts)
       @behaviour Astro.SurfaceComponent
+      @before_compile Astro.SurfaceComponent
 
+      @overridable_value_for_props []
       @excluded_props ~w(id classNames isDisabled)a
 
       @doc """
@@ -70,6 +73,37 @@ defmodule Astro.SurfaceComponent do
       end
 
       defoverridable get_class_name: 2
+    end
+  end
+
+  defmacro __before_compile__(_) do
+    quote do
+      defp maybe_change_value(prop, value) do
+        if Keyword.has_key?(@overridable_value_for_props, prop) do
+          override = Keyword.fetch!(@overridable_value_for_props, prop)
+          "#{override}-#{get_class_name(prop, value)}"
+        else
+          get_class_name(prop, value)
+        end
+      end
+
+      @impl true
+      def generate_class_names(assigns) do
+        values =
+          Enum.reduce(get_props(), [], fn %{name: prop}, acc ->
+            value = Map.get(assigns, prop)
+
+            if is_nil(value),
+              do: acc,
+              else: [
+                build_css_class(@prefix, maybe_change_value(prop, value))
+                | acc
+              ]
+          end)
+
+        [@prefix | values]
+        |> Enum.join(" ")
+      end
     end
   end
 end

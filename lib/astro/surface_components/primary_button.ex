@@ -29,19 +29,4 @@ defmodule Astro.SurfaceComponents.PrimaryButton do
     <button disabled={{ @isDisabled }} class="{{ generate_class_names(assigns) }}"><slot/></button>
     """
   end
-
-  @impl true
-  def generate_class_names(assigns) do
-    values =
-      Enum.reduce(get_props(), [], fn %{name: prop}, acc ->
-        value = Map.get(assigns, prop)
-
-        if is_nil(value),
-          do: acc,
-          else: [build_css_class(@prefix, get_class_name(prop, value)) | acc]
-      end)
-
-    [@prefix | values]
-    |> Enum.join(" ")
-  end
 end
