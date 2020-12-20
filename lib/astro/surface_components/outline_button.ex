@@ -9,6 +9,7 @@ defmodule Astro.SurfaceComponents.OutlineButton do
   @overridable_value_for_props [
     color: "outline"
   ]
+
   prefix("a-btn")
 
   @doc """
