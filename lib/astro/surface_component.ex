@@ -33,12 +33,7 @@ defmodule Astro.SurfaceComponent do
       @before_compile Astro.SurfaceComponent
 
       @overridable_value_for_props []
-      @excluded_props ~w(id classNames disabled)a
-
-      @doc """
-      Component classNames
-      """
-      prop classNames, :css_class
+      @excluded_props ~w(id disabled)a
 
       @doc """
       Disable component
