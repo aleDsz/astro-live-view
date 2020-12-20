@@ -5,6 +5,18 @@ defmodule Astro.ErrorTest do
     assert_raise module(), "is invalid", fn -> raise module() end
   end
 
+  test "returns valid required property message" do
+    assert_raise module(), "Property is required but found nil value", fn ->
+      raise module(), required: true
+    end
+  end
+
+  test "returns valid required property message with given type" do
+    assert_raise module(), "Icon is required but found nil value", fn ->
+      raise module(), required: true, type: :icon
+    end
+  end
+
   test "returns valid message with given type" do
     assert_raise module(), "Test is invalid", fn -> raise module(), type: :test end
   end
