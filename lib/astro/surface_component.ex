@@ -72,15 +72,23 @@ defmodule Astro.SurfaceComponent do
       @impl true
       def generate_class_names(assigns) do
         values =
-          Enum.reduce(get_props(), [], fn %{name: prop}, acc ->
+          Enum.reduce(get_props(), [], fn %{name: prop, opts: opts} = x, acc ->
             value = Map.get(assigns, prop)
+            required = Keyword.get(opts, :required, false)
 
-            if is_nil(value),
-              do: acc,
-              else: [
-                build_css_class(@prefix, maybe_change_value(prop, value))
-                | acc
-              ]
+            cond do
+              (is_nil(required) or required == false) and is_nil(value) ->
+                acc
+
+              required and is_nil(value) ->
+                raise Astro.Error, type: prop, required: true
+
+              true ->
+                [
+                  build_css_class(@prefix, maybe_change_value(prop, value))
+                  | acc
+                ]
+            end
           end)
 
         [@prefix | values]
@@ -103,6 +111,10 @@ defmodule Astro.SurfaceComponent do
 
   def get_class_name(_, :size, value) do
     Astro.size(value)
+  end
+
+  def get_class_name(_, :icon, value) do
+    Astro.icon(value)
   end
 
   def get_class_name(module, prop, value) do
