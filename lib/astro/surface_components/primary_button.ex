@@ -26,7 +26,9 @@ defmodule Astro.SurfaceComponents.PrimaryButton do
   @impl true
   def render(assigns) do
     ~H"""
-    <button disabled={{ @isDisabled }} class="{{ generate_class_names(assigns) }}"><slot/></button>
+    <button disabled={{ @disabled }} class="{{ generate_class_names(assigns) }}">
+      <slot/>
+    </button>
     """
   end
 end

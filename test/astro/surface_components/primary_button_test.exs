@@ -13,7 +13,9 @@ defmodule Astro.SurfaceComponents.PrimaryButtonTest do
         end
 
       assert html =~ """
-             <button class="a-btn">Sample</button>
+             <button class="a-btn">
+               Sample
+             </button>
              """
     end
 
@@ -30,7 +32,9 @@ defmodule Astro.SurfaceComponents.PrimaryButtonTest do
         end
 
       assert html =~ """
-             <button class="a-btn a-btn--venus">Sample</button>
+             <button class="a-btn a-btn--venus">
+               Sample
+             </button>
              """
     end
 
@@ -47,7 +51,9 @@ defmodule Astro.SurfaceComponents.PrimaryButtonTest do
         end
 
       assert html =~ """
-             <button class="a-btn a-btn--large">Sample</button>
+             <button class="a-btn a-btn--large">
+               Sample
+             </button>
              """
     end
 
@@ -65,13 +71,15 @@ defmodule Astro.SurfaceComponents.PrimaryButtonTest do
         end
 
       assert html =~ """
-             <button class="a-btn a-btn--large a-btn--earth">Sample</button>
+             <button class="a-btn a-btn--large a-btn--earth">
+               Sample
+             </button>
              """
     end
 
     test "returns disabled PrimaryButton component with color and size properties" do
       assigns = %{
-        isDisabled: true,
+        disabled: true,
         size: :large,
         color: :earth
       }
@@ -79,12 +87,14 @@ defmodule Astro.SurfaceComponents.PrimaryButtonTest do
       html =
         render_surface do
           ~H"""
-          <PrimaryButton id="sample_button" isDisabled={{ @isDisabled }} size={{ @size }} color={{ @color }}>Sample</PrimaryButton>
+          <PrimaryButton id="sample_button" disabled={{ @disabled }} size={{ @size }} color={{ @color }}>Sample</PrimaryButton>
           """
         end
 
       assert html =~ """
-             <button disabled class="a-btn a-btn--large a-btn--earth">Sample</button>
+             <button disabled class="a-btn a-btn--large a-btn--earth">
+               Sample
+             </button>
              """
     end
   end

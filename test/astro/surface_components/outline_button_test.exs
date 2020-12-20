@@ -13,7 +13,9 @@ defmodule Astro.SurfaceComponents.OutlineButtonTest do
         end
 
       assert html =~ """
-             <button class="a-btn">Sample</button>
+             <button class="a-btn">
+               Sample
+             </button>
              """
     end
 
@@ -30,7 +32,9 @@ defmodule Astro.SurfaceComponents.OutlineButtonTest do
         end
 
       assert html =~ """
-             <button class="a-btn a-btn--outline-venus">Sample</button>
+             <button class="a-btn a-btn--outline-venus">
+               Sample
+             </button>
              """
     end
 
@@ -42,12 +46,16 @@ defmodule Astro.SurfaceComponents.OutlineButtonTest do
       html =
         render_surface do
           ~H"""
-          <OutlineButton id="sample_button" size={{ @size }}>Sample</OutlineButton>
+          <OutlineButton id="sample_button" size={{ @size }}>
+            Sample
+          </OutlineButton>
           """
         end
 
       assert html =~ """
-             <button class="a-btn a-btn--large">Sample</button>
+             <button class="a-btn a-btn--large">
+               Sample
+             </button>
              """
     end
 
@@ -65,13 +73,15 @@ defmodule Astro.SurfaceComponents.OutlineButtonTest do
         end
 
       assert html =~ """
-             <button class="a-btn a-btn--large a-btn--outline-earth">Sample</button>
+             <button class="a-btn a-btn--large a-btn--outline-earth">
+               Sample
+             </button>
              """
     end
 
     test "returns disabled OutlineButton component with color and size properties" do
       assigns = %{
-        isDisabled: true,
+        disabled: true,
         size: :large,
         color: :earth
       }
@@ -79,12 +89,14 @@ defmodule Astro.SurfaceComponents.OutlineButtonTest do
       html =
         render_surface do
           ~H"""
-          <OutlineButton id="sample_button" isDisabled={{ @isDisabled }} size={{ @size }} color={{ @color }}>Sample</OutlineButton>
+          <OutlineButton id="sample_button" disabled={{ @disabled }} size={{ @size }} color={{ @color }}>Sample</OutlineButton>
           """
         end
 
       assert html =~ """
-             <button disabled class="a-btn a-btn--large a-btn--outline-earth">Sample</button>
+             <button disabled class="a-btn a-btn--large a-btn--outline-earth">
+               Sample
+             </button>
              """
     end
   end
