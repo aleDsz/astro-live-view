@@ -7,8 +7,8 @@ defmodule Astro.SurfaceComponents.Icon do
   use Astro.SurfaceComponent
 
   @overridable_value_for_props [
-    side: "space",
-    size: "size"
+    side: "space-{side}",
+    size: "size-{size}"
   ]
 
   prefix("a-icon")
@@ -41,6 +41,6 @@ defmodule Astro.SurfaceComponents.Icon do
   end
 
   def get_class_name(:side, value) do
-    value
+    to_string(value)
   end
 end

@@ -7,7 +7,7 @@ defmodule Astro.SurfaceComponents.OutlineButton do
   use Astro.SurfaceComponent
 
   @overridable_value_for_props [
-    color: "outline"
+    color: "outline-{color}"
   ]
 
   prefix("a-btn")

@@ -61,7 +61,9 @@ defmodule Astro.SurfaceComponent do
       defp maybe_change_value(prop, value) do
         if Keyword.has_key?(@overridable_value_for_props, prop) do
           override = Keyword.fetch!(@overridable_value_for_props, prop)
-          "#{override}-#{get_class_name(__MODULE__, prop, value)}"
+          value = get_class_name(__MODULE__, prop, value)
+
+          String.replace(override, "{#{prop}}", value)
         else
           get_class_name(__MODULE__, prop, value)
         end
