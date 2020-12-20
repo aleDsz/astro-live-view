@@ -53,7 +53,7 @@ defmodule Astro.MixProject do
   defp deps do
     [
       {:phoenix_live_view, "~> 0.15.0", optional: true},
-      {:surface, "~> 0.1.1", optional: true},
+      {:surface, github: "msaraiva/surface", optional: true},
       {:credo, "~> 1.5.0", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:floki, "~> 0.29.0", only: :test},

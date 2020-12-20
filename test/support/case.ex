@@ -3,13 +3,13 @@ defmodule Astro.Case do
   use ExUnit.CaseTemplate
 
   using do
-    module = Astro.Case.get_lib_module(__MODULE__)
+    module = Astro.Case.get_lib_module(__CALLER__.module)
 
     quote do
       alias unquote(module)
 
       defp module do
-        Astro.Case.get_lib_module(__MODULE__)
+        unquote(module)
       end
     end
   end
