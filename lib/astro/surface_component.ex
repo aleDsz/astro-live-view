@@ -33,7 +33,12 @@ defmodule Astro.SurfaceComponent do
       @before_compile Astro.SurfaceComponent
 
       @overridable_value_for_props []
-      @excluded_props ~w(id disabled)a
+      @excluded_props ~w(id classNames disabled)a
+
+      @doc """
+      Additional css classes
+      """
+      prop classNames, :css_class
 
       @doc """
       Disable component
@@ -83,11 +88,18 @@ defmodule Astro.SurfaceComponent do
       end
 
       defp validate_class_names(assigns) do
-        Enum.reduce(get_props(), [], fn %{name: prop, opts: opts} = x, acc ->
-          value = Map.get(assigns, prop)
-          required = Keyword.get(opts, :required, false)
-          validate_prop(prop, value, required, acc)
-        end)
+        classes =
+          Enum.reduce(get_props(), [], fn %{name: prop, opts: opts} = x, acc ->
+            value = Map.get(assigns, prop)
+            required = Keyword.get(opts, :required, false)
+            validate_prop(prop, value, required, acc)
+          end)
+
+        additional_classes = Map.get(assigns, :classNames)
+
+        if is_nil(additional_classes),
+          do: classes,
+          else: classes ++ additional_classes
       end
 
       defp validate_prop(prop, value, required, acc) do

@@ -97,5 +97,47 @@ defmodule Astro.SurfaceComponents.PrimaryButtonTest do
              </button>
              """
     end
+
+    test "returns PrimaryButton component with color and size properties and additional classNames (string)" do
+      assigns = %{
+        size: :large,
+        color: :earth,
+        classNames: "test container"
+      }
+
+      html =
+        render_surface do
+          ~H"""
+          <PrimaryButton id="sample_button" classNames={{ @classNames }} size={{ @size }} color={{ @color }}>Sample</PrimaryButton>
+          """
+        end
+
+      assert html =~ """
+             <button class="a-btn a-btn--large a-btn--earth test container">
+               Sample
+             </button>
+             """
+    end
+
+    test "returns PrimaryButton component with color and size properties and additional classNames (list)" do
+      assigns = %{
+        size: :large,
+        color: :earth,
+        classNames: ["test", "container"]
+      }
+
+      html =
+        render_surface do
+          ~H"""
+          <PrimaryButton id="sample_button" classNames={{ @classNames }} size={{ @size }} color={{ @color }}>Sample</PrimaryButton>
+          """
+        end
+
+      assert html =~ """
+             <button class="a-btn a-btn--large a-btn--earth test container">
+               Sample
+             </button>
+             """
+    end
   end
 end
